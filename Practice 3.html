@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CyberVault | Secure Your Digital Assets</title>
+    <style>
+      :root {
+        --bg: #060b17;
+        --bg-2: #0c1220;
+        --panel: rgba(19, 26, 40, 0.9);
+        --panel-strong: rgba(12, 19, 31, 0.96);
+        --panel-soft: rgba(23, 33, 49, 0.8);
+        --text: #ebf7ff;
+        --muted: #9fb3c8;
+        --line: rgba(148, 163, 184, 0.18);
+        --violet: #7c3aed;
+        --violet-soft: rgba(124, 58, 237, 0.2);
+        --cyan: #06b6d4;
+        --cyan-soft: rgba(6, 182, 212, 0.18);
+        --green: #22c55e;
+        --red: #ef4444;
+        --shadow-glow: 0 0 30px rgba(124, 58, 237, 0.4);
+        --shadow-cyan: 0 0 30px rgba(6, 182, 212, 0.32);
+        --radius: 22px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Inter", "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(124, 58, 237, 0.18), transparent 28%),
+          radial-gradient(circle at top right, rgba(6, 182, 212, 0.2), transparent 20%),
+          linear-gradient(180deg, var(--bg) 0%, #091521 35%, #060b17 100%);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      .container {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(18px);
+        background: rgba(6, 11, 23, 0.7);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 82px;
+        gap: 20px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        font-size: 1.55rem;
+        color: var(--text);
+        text-transform: none;
+      }
+
+      .brand-mark {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--cyan), var(--violet));
+        box-shadow: 0 0 18px rgba(124, 58, 237, 0.8);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2.2rem;
+        list-style: none;
+        flex: 1;
+      }
+
+      .nav-links a {
+        position: relative;
+        color: rgba(235, 247, 255, 0.8);
+        font-size: 0.96rem;
+        font-weight: 500;
+        transition: color 0.25s ease;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -10px;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--cyan), var(--violet));
+        transition: width 0.25s ease;
+      }
+
+      .nav-links a:hover,
+      .nav-links a:focus-visible {
+        color: var(--text);
+      }
+
+      .nav-links a:hover::after,
+      .nav-links a:focus-visible::after {
+        width: 100%;
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 14px;
+        border: 1px solid transparent;
+        padding: 0.9rem 1.5rem;
+        font-weight: 700;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      }
+
+      .btn:hover,
+      .btn:focus-visible {
+        transform: translateY(-2px);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--violet), #9b59ff 55%, var(--cyan));
+        color: #fff;
+        box-shadow: 0 14px 35px rgba(124, 58, 237, 0.42);
+      }
+
+      .btn-primary:hover,
+      .btn-primary:focus-visible {
+        box-shadow: 0 18px 40px rgba(124, 58, 237, 0.5);
+      }
+
+      .btn-ghost {
+        border-color: rgba(255, 255, 255, 0.22);
+        background: rgba(255, 255, 255, 0.02);
+        color: var(--text);
+      }
+
+      .nav-toggle {
+        display: none;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--line);
+        color: var(--text);
+        font-size: 1.7rem;
+        cursor: pointer;
+      }
+
+      main {
+        overflow: hidden;
+      }
+
+      .hero {
+        padding: 5.5rem 0 4.2rem;
+      }
+
+      .hero-inner {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        align-items: center;
+        gap: 2.6rem;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.5rem 0.9rem;
+        background: rgba(124, 58, 237, 0.12);
+        border: 1px solid rgba(124, 58, 237, 0.3);
+        border-radius: 999px;
+        color: #d7c6ff;
+        font-size: 0.8rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--cyan);
+        box-shadow: 0 0 12px rgba(6, 182, 212, 0.9);
+      }
+
+      h1 {
+        margin-top: 1.5rem;
+        font-size: clamp(2.7rem, 5vw, 5rem);
+        line-height: 1.08;
+        letter-spacing: -0.06em;
+        max-width: 670px;
+      }
+
+      .hero-copy p {
+        margin-top: 1.3rem;
+        color: var(--muted);
+        font-size: 1.08rem;
+        max-width: 620px;
+      }
+
+      .cta-row {
+        margin-top: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .cta-row .btn {
+        min-width: 180px;
+      }
+
+      .hero-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.25rem;
+        margin-top: 2.25rem;
+      }
+
+      .mini-stat {
+        min-width: 110px;
+      }
+
+      .mini-stat strong {
+        display: block;
+        font-size: 1.35rem;
+        letter-spacing: -0.04em;
+      }
+
+      .mini-stat span {
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+
+      .vault-card {
+        position: relative;
+        background: linear-gradient(180deg, rgba(18, 25, 39, 0.95) 0%, rgba(10, 17, 28, 0.95) 100%);
+        border: 1px solid rgba(146, 161, 185, 0.15);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        box-shadow: var(--shadow-glow), inset 0 1px 0 rgba(255,255,255,0.03);
+      }
+
+      .vault-card::before {
+        content: "";
+        position: absolute;
+        inset: 12px;
+        border-radius: 18px;
+        border: 1px solid rgba(6, 182, 212, 0.2);
+        pointer-events: none;
+      }
+
+      .dashboard-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+      }
+
+      .wallet-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 0.8rem;
+        background: rgba(148, 163, 184, 0.08);
+        border: 1px solid rgba(148, 163, 184, 0.12);
+        border-radius: 999px;
+        font-size: 0.78rem;
+        color: var(--muted);
+      }
+
+      .wallet-pill .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--green);
+        box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+      }
+
+      .signal {
+        display: flex;
+        gap: 0.35rem;
+        align-items: end;
+        height: 24px;
+      }
+
+      .signal span {
+        display: block;
+        width: 6px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, var(--cyan), rgba(6,182,212,0.2));
+      }
+
+      .signal span:nth-child(1) { height: 35%; }
+      .signal span:nth-child(2) { height: 55%; }
+      .signal span:nth-child(3) { height: 75%; }
+      .signal span:nth-child(4) { height: 100%; }
+
+      .asset-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .coin-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+      }
+
+      .coin-icon {
+        width: 44px;
+        height: 44px;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        font-weight: 800;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #5c9cff, #2d9fdb);
+        box-shadow: 0 0 18px rgba(59, 130, 246, 0.4);
+      }
+
+      .coin-name {
+        font-weight: 700;
+        font-size: 1.05rem;
+      }
+
+      .coin-pair {
+        color: var(--muted);
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .up-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.45rem 0.72rem;
+        border-radius: 999px;
+        background: rgba(34, 197, 94, 0.1);
+        border: 1px solid rgba(34, 197, 94, 0.22);
+        color: #8ae7b7;
+        font-size: 0.76rem;
+        font-weight: 700;
+      }
+
+      .ticker-price {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.2rem;
+      }
+
+      .price-current {
+        font-size: clamp(2rem, 5vw, 3rem);
+        letter-spacing: -0.06em;
+        font-weight: 800;
+      }
+
+      .chart-box {
+        position: relative;
+        height: 180px;
+        border-radius: 18px;
+        background: linear-gradient(180deg, rgba(10, 18, 31, 0.9) 0%, rgba(19, 30, 43, 0.85) 100%);
+        border: 1px solid rgba(148, 163, 184, 0.14);
+        overflow: hidden;
+        padding: 1rem 0.85rem 0.75rem;
+      }
+
+      .chart-grid {
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(rgba(148, 163, 184, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.1) 1px, transparent 1px);
+        background-size: 32px 32px;
+        opacity: 0.5;
+      }
+
+      .line-chart {
+        position: absolute;
+        inset: 0 0 0 0;
+        display: flex;
+        align-items: end;
+        justify-content: center;
+        padding: 1rem;
+      }
+
+      .line-chart svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      .line-chart path {
+        fill: none;
+        stroke: url(#chartGradient);
+        stroke-width: 4;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        filter: drop-shadow(0 0 12px rgba(6, 182, 212, 0.7));
+      }
+
+      .market-section,
+      .security-section,
+      .footer {
+        padding: 2rem 0 4rem;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .section-head h2 {
+        font-size: clamp(2rem, 3vw, 3rem);
+        letter-spacing: -0.05em;
+      }
+
+      .section-head p {
+        color: var(--muted);
+        max-width: 560px;
+      }
+
+      .market-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1.4rem;
+      }
+
+      .market-card {
+        background: rgba(14, 21, 34, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.12);
+        border-radius: 18px;
+        padding: 1.35rem 1.2rem;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      }
+
+      .market-card:hover,
+      .market-card:focus-within {
+        transform: translateY(-6px);
+        border-color: rgba(124, 58, 237, 0.7);
+        box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.25), 0 22px 35px rgba(124, 58, 237, 0.18);
+      }
+
+      .market-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-bottom: 1.2rem;
+      }
+
+      .symbol {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-weight: 700;
+      }
+
+      .token-badge {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: #fff;
+      }
+
+      .btc { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+      .eth { background: linear-gradient(135deg, #6b7280, #9ca3af); }
+      .sol { background: linear-gradient(135deg, #14b8a6, #2dd4bf); }
+      .ada { background: linear-gradient(135deg, #ea580c, #f97316); }
+
+      .market-price {
+        font-size: 1.7rem;
+        letter-spacing: -0.05em;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+      }
+
+      .market-move {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+
+      .positive { color: #8ee7b7; }
+      .negative { color: #ff9ba7; }
+
+      .market-trend {
+        margin-top: 1rem;
+        height: 54px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(148,163,184,0.09);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .trend-bars {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: end;
+        justify-content: space-around;
+        gap: 0.3rem;
+        padding: 0.75rem 0.65rem 0.35rem;
+      }
+
+      .trend-bars span {
+        display: block;
+        width: 14%;
+        border-radius: 6px 6px 0 0;
+        background: linear-gradient(180deg, rgba(6, 182, 212, 0.8), rgba(124, 58, 237, 0.25));
+      }
+
+      .security-layout {
+        display: grid;
+        grid-template-columns: 1fr 1.05fr;
+        gap: 2.25rem;
+        align-items: stretch;
+      }
+
+      .security-visual {
+        position: relative;
+        min-height: 400px;
+        padding: 1.25rem;
+        border-radius: 28px;
+        background: linear-gradient(180deg, rgba(12, 18, 32, 0.96), rgba(18, 26, 37, 0.9));
+        border: 1px solid rgba(148, 163, 184, 0.14);
+        box-shadow: var(--shadow-cyan);
+        overflow: hidden;
+      }
+
+      .security-visual::before {
+        content: "";
+        position: absolute;
+        inset: 30px;
+        border-radius: 24px;
+        background: radial-gradient(circle at center, rgba(6, 182, 212, 0.2), rgba(124, 58, 237, 0.08), transparent 58%);
+      }
+
+      .shield-wrap {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        place-items: center;
+        height: 100%;
+      }
+
+      .shield {
+        position: relative;
+        width: 200px;
+        height: 220px;
+        background: linear-gradient(180deg, rgba(124,58,237,0.75), rgba(6,182,212,0.72));
+        clip-path: polygon(50% 0%, 92% 18%, 89% 58%, 50% 100%, 11% 58%, 8% 18%);
+        box-shadow: 0 0 35px rgba(124, 58, 237, 0.5);
+        display: grid;
+        place-items: center;
+      }
+
+      .shield::before {
+        content: "";
+        position: absolute;
+        inset: 20px 26px 22px 26px;
+        background: rgba(8, 13, 25, 0.75);
+        clip-path: polygon(50% 0%, 92% 18%, 89% 58%, 50% 100%, 11% 58%, 8% 18%);
+      }
+
+      .shield::after {
+        content: "✓";
+        position: relative;
+        z-index: 1;
+        font-size: 4.4rem;
+        font-weight: 800;
+        color: #d9f7ff;
+      }
+
+      .security-copy {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .security-copy h3 {
+        font-size: clamp(2rem, 3vw, 2.7rem);
+        line-height: 1.15;
+        letter-spacing: -0.05em;
+        margin-bottom: 1rem;
+      }
+
+      .security-copy > p {
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+
+      .check-list {
+        list-style: none;
+        display: grid;
+        gap: 1rem;
+      }
+
+      .check-list li {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        background: rgba(9, 15, 25, 0.44);
+        border: 1px solid rgba(148, 163, 184, 0.1);
+        padding: 1rem 1rem;
+        border-radius: 14px;
+      }
+
+      .check-icon {
+        flex-shrink: 0;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, rgba(6,182,212,0.26), rgba(124,58,237,0.28));
+        color: #b9ebff;
+        font-weight: 900;
+      }
+
+      .check-list strong {
+        display: block;
+        margin-bottom: 0.2rem;
+        font-size: 1rem;
+      }
+
+      .check-list span {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .site-footer {
+        border-top: 1px solid var(--line);
+        background: rgba(6, 11, 23, 0.8);
+        margin-top: 1rem;
+      }
+
+      .footer-inner {
+        padding: 2.5rem 0 1.4rem;
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr 0.8fr 0.8fr;
+        gap: 1.6rem;
+        align-items: start;
+      }
+
+      .footer-brand {
+        max-width: 300px;
+      }
+
+      .footer-brand p,
+      .footer-links a,
+      .footer-social a {
+        color: rgba(235, 247, 255, 0.72);
+      }
+
+      .footer-brand p {
+        margin-top: 0.8rem;
+        font-size: 0.95rem;
+      }
+
+      .footer-title {
+        font-size: 0.92rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(235, 247, 255, 0.5);
+        margin-bottom: 0.9rem;
+        font-weight: 700;
+      }
+
+      .footer-links,
+      .footer-social {
+        list-style: none;
+        display: grid;
+        gap: 0.7rem;
+      }
+
+      .footer-links a,
+      .footer-social a {
+        transition: color 0.2s ease;
+      }
+
+      .footer-links a:hover,
+      .footer-social a:hover,
+      .footer-links a:focus-visible,
+      .footer-social a:focus-visible {
+        color: var(--text);
+      }
+
+      .footer-bottom {
+        margin-top: 1.5rem;
+        border-top: 1px solid var(--line);
+        padding-top: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        color: rgba(235, 247, 255, 0.58);
+        font-size: 0.85rem;
+      }
+
+      @media (max-width: 1023px) {
+        .hero-inner {
+          grid-template-columns: 1fr;
+        }
+
+        .security-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .market-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .footer-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 767px) {
+        .nav-toggle {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .nav-links {
+          position: absolute;
+          left: 16px;
+          right: 16px;
+          top: calc(100% + 10px);
+          display: none;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+          padding: 1.1rem 1.1rem 1.2rem;
+          background: rgba(9, 14, 22, 0.98);
+          border: 1px solid var(--line);
+          border-radius: 18px;
+          box-shadow: 0 24px 40px rgba(2, 6, 23, 0.65);
+        }
+
+        .nav-links.is-open {
+          display: flex;
+        }
+
+        .nav-actions {
+          margin-left: auto;
+        }
+
+        .nav-actions .btn {
+          display: none;
+        }
+
+        .hero {
+          padding-top: 3.8rem;
+        }
+
+        .cta-row {
+          flex-direction: column;
+        }
+
+        .cta-row .btn {
+          width: 100%;
+          min-width: 100%;
+        }
+
+        .market-grid,
+        .footer-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .section-head {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a href="#" class="brand" aria-label="CyberVault home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>CyberVault</span>
+        </a>
+
+        <nav aria-label="Main navigation">
+          <ul class="nav-links" id="navMenu">
+            <li><a href="#markets">Markets</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#exchange">Exchange</a></li>
+            <li><a href="#security">Security</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </nav>
+
+        <div class="nav-actions">
+          <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+            ☰
+          </button>
+          <a href="#" class="btn btn-primary">Connect Wallet</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <span class="eyebrow">DeFi Security Suite</span>
+            <h1>Secure Your Digital Assets in the Decentralized Era.</h1>
+            <p>
+              Track, trade, and stake your Web3 portfolio with military-grade security and zero gas fee delays.
+            </p>
+            <div class="cta-row">
+              <a href="#" class="btn btn-primary">Launch App</a>
+              <a href="#markets" class="btn btn-ghost">Explore Markets</a>
+            </div>
+            <div class="hero-stats" aria-label="Portfolio stats">
+              <div class="mini-stat">
+                <strong>$18.4B</strong>
+                <span>Volume Traded</span>
+              </div>
+              <div class="mini-stat">
+                <strong>320k</strong>
+                <span>Active Wallets</span>
+              </div>
+              <div class="mini-stat">
+                <strong>99.98%</strong>
+                <span>Uptime</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="vault-card" aria-label="Portfolio dashboard preview">
+            <div class="dashboard-head">
+              <div class="wallet-pill"><span class="dot"></span> Secure Wallet</div>
+              <div class="signal" aria-hidden="true">
+                <span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+
+            <div class="asset-row">
+              <div class="coin-meta">
+                <div class="coin-icon">Ξ</div>
+                <div>
+                  <div class="coin-name">Ethereum</div>
+                  <div class="coin-pair">ETH / USDT</div>
+                </div>
+              </div>
+              <span class="up-pill">+5.4% ↗</span>
+            </div>
+
+            <div class="ticker-price">
+              <div class="price-current">$3,420.50</div>
+            </div>
+
+            <div class="chart-box" aria-label="price chart">
+              <div class="chart-grid"></div>
+              <div class="line-chart">
+                <svg viewBox="0 0 360 160" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="chartGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#06B6D4" />
+                      <stop offset="100%" stop-color="#7C3AED" />
+                    </linearGradient>
+                  </defs>
+                  <path d="M0,120 C30,110 45,98 76,90 S150,72 196,74 S252,52 282,66 S330,34 360,18" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="market-section" id="markets">
+        <div class="container">
+          <div class="section-head">
+            <h2>Live Market Ticker</h2>
+            <p>Monitor the assets moving the ecosystem with the same speed and precision used by top-tier DeFi operators.</p>
+          </div>
+
+          <div class="market-grid" aria-label="Market overview cards">
+            <article class="market-card">
+              <div class="market-top">
+                <div class="symbol"><span class="token-badge btc">₿</span> BTC</div>
+                <span class="market-move positive">+2.8%</span>
+              </div>
+              <div class="market-price">$88,400</div>
+              <div class="market-trend" aria-hidden="true">
+                <div class="trend-bars">
+                  <span style="height: 36%"></span>
+                  <span style="height: 58%"></span>
+                  <span style="height: 48%"></span>
+                  <span style="height: 74%"></span>
+                  <span style="height: 82%"></span>
+                  <span style="height: 98%"></span>
+                </div>
+              </div>
+            </article>
+
+            <article class="market-card">
+              <div class="market-top">
+                <div class="symbol"><span class="token-badge eth">Ξ</span> ETH</div>
+                <span class="market-move positive">+5.4%</span>
+              </div>
+              <div class="market-price">$3,420</div>
+              <div class="market-trend" aria-hidden="true">
+                <div class="trend-bars">
+                  <span style="height: 28%"></span>
+                  <span style="height: 46%"></span>
+                  <span style="height: 52%"></span>
+                  <span style="height: 65%"></span>
+                  <span style="height: 78%"></span>
+                  <span style="height: 92%"></span>
+                </div>
+              </div>
+            </article>
+
+            <article class="market-card">
+              <div class="market-top">
+                <div class="symbol"><span class="token-badge sol">S</span> SOL</div>
+                <span class="market-move positive">+12.1%</span>
+              </div>
+              <div class="market-price">$195</div>
+              <div class="market-trend" aria-hidden="true">
+                <div class="trend-bars">
+                  <span style="height: 30%"></span>
+                  <span style="height: 40%"></span>
+                  <span style="height: 52%"></span>
+                  <span style="height: 70%"></span>
+                  <span style="height: 88%"></span>
+                  <span style="height: 100%"></span>
+                </div>
+              </div>
+            </article>
+
+            <article class="market-card">
+              <div class="market-top">
+                <div class="symbol"><span class="token-badge ada">A</span> ADA</div>
+                <span class="market-move negative">-1.2%</span>
+              </div>
+              <div class="market-price">$0.75</div>
+              <div class="market-trend" aria-hidden="true">
+                <div class="trend-bars">
+                  <span style="height: 100%"></span>
+                  <span style="height: 90%"></span>
+                  <span style="height: 78%"></span>
+                  <span style="height: 61%"></span>
+                  <span style="height: 42%"></span>
+                  <span style="height: 34%"></span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="security-section" id="security">
+        <div class="container security-layout">
+          <div class="security-visual" aria-hidden="true">
+            <div class="shield-wrap">
+              <div class="shield"></div>
+            </div>
+          </div>
+
+          <div class="security-copy">
+            <h3>Security built for every chain, node, and key.</h3>
+            <p>CyberVault combines institutional-grade encryption with self-custody tools so you can move confidently across every wallet, exchange, and protocol.</p>
+
+            <ul class="check-list">
+              <li>
+                <span class="check-icon">✓</span>
+                <div>
+                  <strong>Non-Custodial Storage</strong>
+                  <span>You hold 100% control over your private keys.</span>
+                </div>
+              </li>
+              <li>
+                <span class="check-icon">✓</span>
+                <div>
+                  <strong>Biometric Authentication</strong>
+                  <span>Multi-factor hardware &amp; face verification.</span>
+                </div>
+              </li>
+              <li>
+                <span class="check-icon">✓</span>
+                <div>
+                  <strong>Cold Wallet Integration</strong>
+                  <span>Sync seamlessly with Ledger &amp; Trezor hardware.</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="faq">
+      <div class="container footer-inner">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="#" class="brand" aria-label="CyberVault home">
+              <span class="brand-mark" aria-hidden="true"></span>
+              <span>CyberVault</span>
+            </a>
+            <p>Custom portfolio intelligence for modern crypto investors building long-term digital wealth.</p>
+          </div>
+
+          <div>
+            <h4 class="footer-title">Quick Links</h4>
+            <ul class="footer-links">
+              <li><a href="#markets">Markets</a></li>
+              <li><a href="#portfolio">Portfolio</a></li>
+              <li><a href="#exchange">Exchange</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="footer-title">Company</h4>
+            <ul class="footer-links">
+              <li><a href="#security">Security</a></li>
+              <li><a href="#faq">FAQ</a></li>
+              <li><a href="#">Support</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="footer-title">Social</h4>
+            <ul class="footer-social">
+              <li><a href="#">Discord</a></li>
+              <li><a href="#">Telegram</a></li>
+              <li><a href="#">Twitter/X</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© 2026 CyberVault. All rights reserved.</span>
+          <span>Built for secure digital wealth.</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const toggleButton = document.querySelector('.nav-toggle');
+      const navMenu = document.getElementById('navMenu');
+
+      if (toggleButton && navMenu) {
+        toggleButton.addEventListener('click', () => {
+          const isOpen = navMenu.classList.toggle('is-open');
+          toggleButton.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        navMenu.querySelectorAll('a').forEach((link) => {
+          link.addEventListener('click', () => {
+            navMenu.classList.remove('is-open');
+            toggleButton.setAttribute('aria-expanded', 'false');
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
